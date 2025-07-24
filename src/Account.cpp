@@ -19,25 +19,12 @@ void Account::setOwner(Person *owner) { this->owner = owner; }
 // Transaction methods
 void Account::deposit(float amount)
 {
-    if (amount > 0)
-    {
-        this->balance += amount;
-    }
 }
 
 void Account::withdraw(float amount)
 {
-    if (amount > 0 && amount <= this->balance)
-    {
-        this->balance -= amount;
-    }
 }
 
 void Account::transfer(Account *toAccount, float amount)
 {
-    if (amount > 0 && amount <= this->balance)
-    {
-        this->withdraw(amount);
-        toAccount->deposit(amount);
-    }
 }
