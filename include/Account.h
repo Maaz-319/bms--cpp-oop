@@ -1,5 +1,5 @@
 #pragma once
-#include "Person/Person.h"
+#include "Person.h"
 #include <string>
 
 class Account
