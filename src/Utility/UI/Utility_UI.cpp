@@ -17,24 +17,59 @@ void Utility_UI::set_console_color(int color)
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
     SetConsoleTextAttribute(hConsole, color);
 #else
-    switch(color) {
-        case 0: cout << "\033[30m"; break;  // Black
-        case 1: cout << "\033[34m"; break;  // Dark Blue
-        case 2: cout << "\033[32m"; break;  // Dark Green
-        case 3: cout << "\033[36m"; break;  // Dark Cyan
-        case 4: cout << "\033[31m"; break;  // Dark Red
-        case 5: cout << "\033[35m"; break;  // Dark Magenta
-        case 6: cout << "\033[33m"; break;  // Dark Yellow
-        case 7: cout << "\033[37m"; break;  // Light Gray
-        case 8: cout << "\033[90m"; break;  // Dark Gray
-        case 9: cout << "\033[94m"; break;  // Blue
-        case 10: cout << "\033[92m"; break; // Green
-        case 11: cout << "\033[96m"; break; // Cyan
-        case 12: cout << "\033[91m"; break; // Red
-        case 13: cout << "\033[95m"; break; // Magenta
-        case 14: cout << "\033[93m"; break; // Yellow
-        case 15: cout << "\033[97m"; break; // White
-        default: cout << "\033[37m"; break; // white
+    switch (color)
+    {
+    case 0:
+        cout << "\033[30m";
+        break; // Black
+    case 1:
+        cout << "\033[34m";
+        break; // Dark Blue
+    case 2:
+        cout << "\033[32m";
+        break; // Dark Green
+    case 3:
+        cout << "\033[36m";
+        break; // Dark Cyan
+    case 4:
+        cout << "\033[31m";
+        break; // Dark Red
+    case 5:
+        cout << "\033[35m";
+        break; // Dark Magenta
+    case 6:
+        cout << "\033[33m";
+        break; // Dark Yellow
+    case 7:
+        cout << "\033[37m";
+        break; // Light Gray
+    case 8:
+        cout << "\033[90m";
+        break; // Dark Gray
+    case 9:
+        cout << "\033[94m";
+        break; // Blue
+    case 10:
+        cout << "\033[92m";
+        break; // Green
+    case 11:
+        cout << "\033[96m";
+        break; // Cyan
+    case 12:
+        cout << "\033[91m";
+        break; // Red
+    case 13:
+        cout << "\033[95m";
+        break; // Magenta
+    case 14:
+        cout << "\033[93m";
+        break; // Yellow
+    case 15:
+        cout << "\033[97m";
+        break; // White
+    default:
+        cout << "\033[37m";
+        break; // white
     }
 #endif
 }
@@ -76,7 +111,7 @@ void Utility_UI::print_header(const string &title)
     cout << endl;
 }
 
-void Utility_UI::print_menu_box(const string &title, const vector<string> &options)
+int Utility_UI::print_menu_box(const string &title, const vector<string> &options)
 {
     system("cls");
 
@@ -109,6 +144,8 @@ void Utility_UI::print_menu_box(const string &title, const vector<string> &optio
     cout << "+" << endl;
 
     cout << endl;
+
+    return Utility_UI::take_integer_input(1, options.size(), "choice");
 }
 
 void Utility_UI::print_success_message(const string &message)
@@ -149,7 +186,7 @@ int Utility_UI::take_integer_input(int min, int max, string prompt)
 {
     int variable;
     bool valid = false;
-    
+
     while (!valid)
     {
         cout << "Enter " << prompt << " (" << min << " - " << max << "): ";
@@ -201,26 +238,31 @@ string Utility_UI::take_phone_input()
 string Utility_UI::take_string_input(string prompt)
 {
     string variable;
-    
+
     while (true)
     {
         cout << "Enter " << prompt << ": ";
-        
-        if (cin.peek() == '\n') {
+
+        if (cin.peek() == '\n')
+        {
             cin.ignore();
         }
-        
+
         getline(cin, variable);
 
         // Remove leading and trailing whitespace
-        variable.erase(variable.begin(), find_if(variable.begin(), variable.end(), [](unsigned char ch) { return !isspace(ch); }));
-        variable.erase(find_if(variable.rbegin(), variable.rend(), [](unsigned char ch) { return !isspace(ch); }).base(), variable.end());
+        variable.erase(variable.begin(), find_if(variable.begin(), variable.end(), [](unsigned char ch)
+                                                 { return !isspace(ch); }));
+        variable.erase(find_if(variable.rbegin(), variable.rend(), [](unsigned char ch)
+                               { return !isspace(ch); })
+                           .base(),
+                       variable.end());
 
         if (!variable.empty())
         {
             return variable;
         }
-        
+
         Utility_UI::print_error_message("Input cannot be empty. Please try again.");
     }
 }
