@@ -31,5 +31,9 @@
 *.out
 *.app
 
+<<<<<<< Updated upstream
 # vscode
+=======
+# vscode workspace files
+>>>>>>> Stashed changes
 .vscode/
