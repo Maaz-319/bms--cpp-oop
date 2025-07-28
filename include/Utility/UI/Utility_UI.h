@@ -1,14 +1,13 @@
-#ifndef UTILITY_H
-#define UTILITY_H
+#pragma once
 
 #include <string>
 #include <vector>
-#ifdef _WIN32
+// #ifdef _WIN32
 #include <windows.h>
-#endif
+// #endif
 using namespace std;
 
-class Utility {
+class Utility_UI {
 public:
     static void print_line(int);
     static void print_dashed_line(int);
@@ -22,7 +21,7 @@ public:
     static int take_integer_input(int min, int max, string prompt);
     static string take_phone_input();
     static string take_string_input(string prompt);
-    Utility() = delete;
+    Utility_UI() = delete;
 
     enum Colors {
         BLACK = 0,
@@ -43,5 +42,3 @@ public:
         WHITE = 15
     };
 };
-
-#endif
