@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 #include "Utility_UI.h"
+=======
+#include "../../../include/Utility/UI/Utility_UI.h"
+>>>>>>> 31cfcde02dc7b2805dc9e922122947394fe32923
 #include <string>
 #include <vector>
 #include <iostream>
@@ -11,7 +15,11 @@
 
 using namespace std;
 
+<<<<<<< HEAD
 void Utility::set_console_color(int color)
+=======
+void Utility_UI::set_console_color(int color)
+>>>>>>> 31cfcde02dc7b2805dc9e922122947394fe32923
 {
 #ifdef _WIN32
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -39,7 +47,11 @@ void Utility::set_console_color(int color)
 #endif
 }
 
+<<<<<<< HEAD
 void Utility::reset_console_color()
+=======
+void Utility_UI::reset_console_color()
+>>>>>>> 31cfcde02dc7b2805dc9e922122947394fe32923
 {
 #ifdef _WIN32
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -49,7 +61,11 @@ void Utility::reset_console_color()
 #endif
 }
 
+<<<<<<< HEAD
 void Utility::print_line(int length = 50)
+=======
+void Utility_UI::print_line(int length = 50)
+>>>>>>> 31cfcde02dc7b2805dc9e922122947394fe32923
 {
     for (int i = 0; i < length; i++)
     {
@@ -58,7 +74,11 @@ void Utility::print_line(int length = 50)
     cout << endl;
 }
 
+<<<<<<< HEAD
 void Utility::print_dashed_line(int length = 50)
+=======
+void Utility_UI::print_dashed_line(int length = 50)
+>>>>>>> 31cfcde02dc7b2805dc9e922122947394fe32923
 {
     for (int i = 0; i < length; i++)
     {
@@ -67,7 +87,11 @@ void Utility::print_dashed_line(int length = 50)
     cout << endl;
 }
 
+<<<<<<< HEAD
 void Utility::print_header(const string &title)
+=======
+void Utility_UI::print_header(const string &title)
+>>>>>>> 31cfcde02dc7b2805dc9e922122947394fe32923
 {
     system("cls");
     print_line(60);
@@ -76,7 +100,11 @@ void Utility::print_header(const string &title)
     cout << endl;
 }
 
+<<<<<<< HEAD
 void Utility::print_menu_box(const string &title, const vector<string> &options)
+=======
+void Utility_UI::print_menu_box(const string &title, const vector<string> &options)
+>>>>>>> 31cfcde02dc7b2805dc9e922122947394fe32923
 {
     system("cls");
 
@@ -111,6 +139,7 @@ void Utility::print_menu_box(const string &title, const vector<string> &options)
     cout << endl;
 }
 
+<<<<<<< HEAD
 void Utility::print_success_message(const string &message)
 {
     cout << endl;
@@ -132,6 +161,29 @@ void Utility::print_error_message(const string &message)
 }
 
 void Utility::print_info_box(const string &message)
+=======
+void Utility_UI::print_success_message(const string &message)
+{
+    cout << endl;
+    Utility_UI::set_console_color(Utility_UI::Colors::GREEN);
+    print_dashed_line(40);
+    cout << "SUCCESS: " << message << endl;
+    print_dashed_line(40);
+    Utility_UI::reset_console_color();
+}
+
+void Utility_UI::print_error_message(const string &message)
+{
+    cout << endl;
+    Utility_UI::set_console_color(Utility_UI::Colors::RED);
+    print_dashed_line(40);
+    cout << "ERROR: " << message << endl;
+    print_dashed_line(40);
+    Utility_UI::reset_console_color();
+}
+
+void Utility_UI::print_info_box(const string &message)
+>>>>>>> 31cfcde02dc7b2805dc9e922122947394fe32923
 {
     cout << endl;
     cout << "+";
@@ -145,7 +197,11 @@ void Utility::print_info_box(const string &message)
     cout << "+" << endl;
 }
 
+<<<<<<< HEAD
 int Utility::take_integer_input(int min, int max, string prompt)
+=======
+int Utility_UI::take_integer_input(int min, int max, string prompt)
+>>>>>>> 31cfcde02dc7b2805dc9e922122947394fe32923
 {
     int variable;
     bool valid = false;
@@ -155,13 +211,21 @@ int Utility::take_integer_input(int min, int max, string prompt)
         cout << "Enter " << prompt << " (" << min << " - " << max << "): ";
         if (!(cin >> variable))
         {
+<<<<<<< HEAD
             Utility::print_error_message("Invalid input. Please enter a number.");
+=======
+            Utility_UI::print_error_message("Invalid input. Please enter a number.");
+>>>>>>> 31cfcde02dc7b2805dc9e922122947394fe32923
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Clear the input buffer
         }
         else if (variable < min || variable > max)
         {
+<<<<<<< HEAD
             Utility::print_error_message("Input out of range.\nPlease enter a number between " + to_string(min) + " and " + to_string(max) + ".");
+=======
+            Utility_UI::print_error_message("Input out of range.\nPlease enter a number between " + to_string(min) + " and " + to_string(max) + ".");
+>>>>>>> 31cfcde02dc7b2805dc9e922122947394fe32923
             cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Clear any remaining input
         }
         else
@@ -173,7 +237,11 @@ int Utility::take_integer_input(int min, int max, string prompt)
     return variable;
 }
 
+<<<<<<< HEAD
 string Utility::take_phone_input()
+=======
+string Utility_UI::take_phone_input()
+>>>>>>> 31cfcde02dc7b2805dc9e922122947394fe32923
 {
     string variable;
     bool valid = false;
@@ -186,7 +254,11 @@ string Utility::take_phone_input()
         // Check if the input is a valid phone number (11 digits, starts with 03)
         if (variable.length() != 11 || variable.substr(0, 2) != "03" || !all_of(variable.begin(), variable.end(), ::isdigit))
         {
+<<<<<<< HEAD
             Utility::print_error_message("Invalid phone number.\nPlease enter an 11-digit number starting with 03.");
+=======
+            Utility_UI::print_error_message("Invalid phone number.\nPlease enter an 11-digit number starting with 03.");
+>>>>>>> 31cfcde02dc7b2805dc9e922122947394fe32923
             cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Clear any remaining input
         }
         else
@@ -198,7 +270,11 @@ string Utility::take_phone_input()
     return variable;
 }
 
+<<<<<<< HEAD
 string Utility::take_string_input(string prompt)
+=======
+string Utility_UI::take_string_input(string prompt)
+>>>>>>> 31cfcde02dc7b2805dc9e922122947394fe32923
 {
     string variable;
     
@@ -221,6 +297,10 @@ string Utility::take_string_input(string prompt)
             return variable;
         }
         
+<<<<<<< HEAD
         Utility::print_error_message("Input cannot be empty. Please try again.");
+=======
+        Utility_UI::print_error_message("Input cannot be empty. Please try again.");
+>>>>>>> 31cfcde02dc7b2805dc9e922122947394fe32923
     }
 }

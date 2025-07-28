@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #ifndef UTILITY_H
 #define UTILITY_H
 
@@ -9,6 +10,18 @@
 using namespace std;
 
 class Utility {
+=======
+#pragma once
+
+#include <string>
+#include <vector>
+// #ifdef _WIN32
+#include <windows.h>
+// #endif
+using namespace std;
+
+class Utility_UI {
+>>>>>>> 31cfcde02dc7b2805dc9e922122947394fe32923
 public:
     static void print_line(int);
     static void print_dashed_line(int);
@@ -22,7 +35,11 @@ public:
     static int take_integer_input(int min, int max, string prompt);
     static string take_phone_input();
     static string take_string_input(string prompt);
+<<<<<<< HEAD
     Utility() = delete;
+=======
+    Utility_UI() = delete;
+>>>>>>> 31cfcde02dc7b2805dc9e922122947394fe32923
 
     enum Colors {
         BLACK = 0,
@@ -42,6 +59,10 @@ public:
         YELLOW = 14,
         WHITE = 15
     };
+<<<<<<< HEAD
 };
 
 #endif
+=======
+};
+>>>>>>> 31cfcde02dc7b2805dc9e922122947394fe32923
