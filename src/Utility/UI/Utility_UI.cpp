@@ -4,6 +4,7 @@
 #include <iomanip>
 #include <regex>
 #include <string>
+#include <random>
 
 #ifdef _WIN32
 #include <windows.h>
@@ -358,4 +359,11 @@ std::string Utility_UI::take_pin_input(const std::string &prompt, int length)
         }
     }
     return input;
+}
+
+std::string Utility_UI::generate_4_digit_random_number()
+{
+    static std::mt19937 rng(std::random_device{}());     // initialized once
+    std::uniform_int_distribution<int> dist(1000, 9999); // 4-digit range
+    return std::to_string(dist(rng));
 }

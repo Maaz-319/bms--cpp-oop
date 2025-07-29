@@ -23,6 +23,7 @@ public:
     static std::string take_string_input(const std::string &prompt, int limit = 100);
     static std::string take_email_input(const std::string &prompt = "Email");
     static std::string take_pin_input(const std::string &prompt = "PIN", int length = 4);
+    static std::string generate_4_digit_random_number();
     Utility_UI() = delete;
 
     enum Colors
