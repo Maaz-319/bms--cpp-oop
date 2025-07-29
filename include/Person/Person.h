@@ -18,26 +18,27 @@ protected:
 
 public:
     Person();
-    virtual void printDetails() = 0;
+    // virtual void printDetails() = 0;
 
     // Getters
-    virtual string getName();
-    virtual int getAge();
-    virtual string printType();
-    virtual string getPhone();
-    virtual string getAddress();
+    string getName();
+    int getAge();
+    string printType();
+    string getPhone();
+    string getAddress();
     static int getCount();
-    virtual int getId();
+    int getId();
 
     // Setters
-    virtual void setName(const string &name);
-    virtual void setAge(int age);
-    virtual void setType(const string &type);
-    virtual void setPhone(const string &phone);
-    virtual void setAddress(const string &address);
-    virtual void setId(int id);
+    void setName(const string &name);
+    void setAge(int age);
+    void setType(const string &type);
+    void setPhone(const string &phone);
+    void setAddress(const string &address);
+    void setId(int id);
 
-    virtual void get_common_inputs();
+    void get_common_inputs();
+
     virtual void get_specific_inputs() = 0;
 
     virtual ~Person();
