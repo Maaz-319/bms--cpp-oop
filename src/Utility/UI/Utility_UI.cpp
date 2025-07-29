@@ -116,7 +116,6 @@ void Utility_UI::print_header(const std::string &title)
 
 int Utility_UI::print_menu_box(const std::string &title, const std::vector<std::string> &options)
 {
-    system("cls");
 
     // Top border
     cout << "+";
@@ -369,7 +368,7 @@ std::string Utility_UI::generate_4_digit_random_number()
     return std::to_string(dist(rng));
 }
 
-double Utility_UI::take_balance_input(const std::string &prompt, double min = 1.0, double max = 1e6)
+double Utility_UI::take_balance_input(const std::string &prompt, double min, double max)
 {
     double amount;
     while (true)
