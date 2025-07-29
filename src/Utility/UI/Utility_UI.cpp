@@ -114,11 +114,12 @@ void Utility_UI::print_dashed_line(int length)
 //     cout << endl;
 // }
 
-void Utility_UI::print_header(const std::string& header, int width) {
+void Utility_UI::print_header(const std::string &header, int width)
+{
     Utility_UI::print_dashed_line(width);
     int space = width / 2 - header.length() / 2;
     cout << "|" << std::string(space, ' ') << header
-              << std::string(width - space - header.length() - 2, ' ') << "|\n";
+         << std::string(width - space - header.length() - 2, ' ') << "|\n";
     Utility_UI::print_dashed_line(width);
 }
 
@@ -406,4 +407,26 @@ double Utility_UI::take_balance_input(const std::string &prompt, double min, dou
     }
 
     return amount;
+}
+
+std::string Utility_UI::get_formatted_date()
+{
+    auto now = std::chrono::system_clock::now();
+    std::time_t time_now = std::chrono::system_clock::to_time_t(now);
+    std::tm *local_tm = std::localtime(&time_now);
+
+    std::stringstream ss;
+    ss << std::put_time(local_tm, "%d %B, %Y"); // e.g., 29 July, 2025
+    return ss.str();
+}
+
+std::string Utility_UI::get_formatted_time()
+{
+    auto now = std::chrono::system_clock::now();
+    std::time_t time_now = std::chrono::system_clock::to_time_t(now);
+    std::tm *local_tm = std::localtime(&time_now);
+
+    std::stringstream ss;
+    ss << std::put_time(local_tm, "%I:%M %p"); // e.g., 07:45 PM
+    return ss.str();
 }

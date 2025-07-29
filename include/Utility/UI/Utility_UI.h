@@ -5,6 +5,10 @@
 #include <string>
 #include <vector>
 #include <limits>
+#include <iomanip>
+#include <sstream>
+#include <ctime>
+#include <chrono>
 
 class Utility_UI
 {
@@ -26,6 +30,10 @@ public:
     static std::string take_pin_input(const std::string &prompt = "PIN", int length = 4);
     static std::string generate_4_digit_random_number();
     static double take_balance_input(const std::string &prompt="Amount", double min = 1.0, double max = 1e6);
+
+    static std::string get_formatted_date();
+    static std::string get_formatted_time();
+
     Utility_UI() = delete;
 
     enum Colors
