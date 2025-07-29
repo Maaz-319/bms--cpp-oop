@@ -1,4 +1,5 @@
 #include "Person.h"
+#include "../Utility/UI/Utility_UI.h"
 
 #include <iostream>
 
@@ -21,6 +22,13 @@ void Person::setType(const string &type) { this->type = type; }
 void Person::setPhone(const string &phone) { this->phone = phone; }
 void Person::setAddress(const string &address) { this->address = address; }
 void Person::setId(int id) { this->id = id; }
+
+void Person::get_common_inputs(){
+    this->setName(Utility_UI::take_string_input("Name"));
+    this->setAge(Utility_UI::take_integer_input(18, 100, "Age"));
+    this->setPhone(Utility_UI::take_phone_input());
+    this->setAddress(Utility_UI::take_string_input("Address"));
+}
 
 Person::~Person()
 {

@@ -10,7 +10,7 @@ public:
     AccountHolder();
     static int get_count();
 
-    // void get_specific_inputs() override;
+    void get_specific_inputs() override;
 
     ~AccountHolder();
 };

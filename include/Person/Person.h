@@ -37,8 +37,8 @@ public:
     virtual void setAddress(const string &address);
     virtual void setId(int id);
 
-    // virtual void get_common_inputs();
-    // virtual void get_specific_inputs() = 0;
+    virtual void get_common_inputs();
+    virtual void get_specific_inputs() = 0;
 
     virtual ~Person();
 };
