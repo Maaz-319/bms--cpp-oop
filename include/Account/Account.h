@@ -1,6 +1,8 @@
 #pragma once
-#include "Person.h"
+#include "../Person/Person.h"
 #include <string>
+
+using namespace std;
 
 class Account
 {

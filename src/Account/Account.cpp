@@ -1,4 +1,4 @@
-#include "Account.h"
+#include "../../include/Account/Account.h"
 
 Account::Account() : acc_no(""), balance(0.0), type(""), pin(""), owner(nullptr) {}
 
@@ -28,3 +28,5 @@ void Account::withdraw(float amount)
 void Account::transfer(Account *toAccount, float amount)
 {
 }
+
+Account::~Account() {}
