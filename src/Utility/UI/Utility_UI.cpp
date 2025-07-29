@@ -2,6 +2,8 @@
 #include <vector>
 #include <iostream>
 #include <iomanip>
+#include <regex>
+#include <string>
 
 #ifdef _WIN32
 #include <windows.h>
@@ -83,7 +85,7 @@ void Utility_UI::reset_console_color()
 #endif
 }
 
-void Utility_UI::print_line(int length = 50)
+void Utility_UI::print_line(int length)
 {
     for (int i = 0; i < length; i++)
     {
@@ -92,7 +94,7 @@ void Utility_UI::print_line(int length = 50)
     cout << endl;
 }
 
-void Utility_UI::print_dashed_line(int length = 50)
+void Utility_UI::print_dashed_line(int length)
 {
     for (int i = 0; i < length; i++)
     {
@@ -110,7 +112,7 @@ void Utility_UI::print_header(const std::string &title)
     cout << endl;
 }
 
-int Utility_UI::print_menu_box(const std::string &title, const vector<std::string> &options)
+int Utility_UI::print_menu_box(const std::string &title, const std::vector<std::string> &options)
 {
     system("cls");
 
@@ -181,7 +183,7 @@ void Utility_UI::print_info_box(const std::string &message)
     cout << "+" << endl;
 }
 
-int Utility_UI::take_integer_input(int min, int max, std::string prompt)
+int Utility_UI::take_integer_input(int min, int max, const std::string &prompt)
 {
     int variable;
     bool valid = false;
@@ -266,7 +268,7 @@ int Utility_UI::take_integer_input(int min, int max, std::string prompt)
 //     }
 // }
 
-std::string Utility_UI::take_string_input(const std::string &prompt, int limit = 100)
+std::string Utility_UI::take_string_input(const std::string &prompt, int limit)
 {
     std::string input;
     while (true)
@@ -294,7 +296,7 @@ std::string Utility_UI::take_string_input(const std::string &prompt, int limit =
     return input;
 }
 
-std::string Utility_UI::take_email_input(const std::string &prompt = "Email")
+std::string Utility_UI::take_email_input(const std::string &prompt)
 {
     std::string input;
     std::regex pattern("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
@@ -314,7 +316,7 @@ std::string Utility_UI::take_email_input(const std::string &prompt = "Email")
     return input;
 }
 
-std::string Utility_UI::take_phone_input(const std::string &prompt = "Phone No")
+std::string Utility_UI::take_phone_input(const std::string &prompt)
 {
     std::string input;
     std::regex pattern("^03\\d{9}$");
@@ -334,15 +336,20 @@ std::string Utility_UI::take_phone_input(const std::string &prompt = "Phone No")
     return input;
 }
 
-std::string Utility_UI::take_pin_input(const std::string& prompt = "PIN", int length = 4) {
+std::string Utility_UI::take_pin_input(const std::string &prompt, int length)
+{
     std::string input;
     std::regex pattern("^\\d{4}$");
-    while (true) {
+    while (true)
+    {
         std::cout << "Enter " << prompt << " (" << length << "-digit): ";
         std::getline(std::cin, input);
-        if (!std::regex_match(input, pattern)) {
+        if (!std::regex_match(input, pattern))
+        {
             std::cout << "ERROR: Invalid " << prompt << ". Please try again.\n";
-        } else {
+        }
+        else
+        {
             break;
         }
     }

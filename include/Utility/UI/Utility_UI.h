@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <regex>
+#include <string>
 #include <vector>
 #ifdef _WIN32
 #include <windows.h>
@@ -10,21 +11,21 @@
 class Utility_UI
 {
 public:
-    static void print_line(int);
-    static void print_dashed_line(int);
+    static void print_line(int length = 50);
+    static void print_dashed_line(int length = 50);
     static void print_header(const std::string &title);
-    static int print_menu_box(const std::string &title, const vector<std::string> &options);
+    static int print_menu_box(const std::string &title, const std::vector<std::string> &options);
     static void print_success_message(const std::string &message);
     static void print_error_message(const std::string &message);
     static void print_info_box(const std::string &message);
     static void set_console_color(int color);
     static void reset_console_color();
-    static int take_integer_input(int min, int max, string prompt);
+    static int take_integer_input(int min, int max, const std::string &prompt);
     // static std::string take_phone_input();
-    static std::string take_phone_input(const std::string& prompt = "Phone No");
-    static std::string take_string_input(const std::string& prompt, int limit = 100);
-    static std::string take_email_input(const std::string& prompt = "Email");
-    static std::string take_pin_input(const std::string& prompt = "PIN", int length = 4);
+    static std::string take_phone_input(const std::string &prompt = "Phone No");
+    static std::string take_string_input(const std::string &prompt, int limit = 100);
+    static std::string take_email_input(const std::string &prompt = "Email");
+    static std::string take_pin_input(const std::string &prompt = "PIN", int length = 4);
     Utility_UI() = delete;
 
     enum Colors
