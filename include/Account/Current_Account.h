@@ -16,5 +16,8 @@ public:
     // Override the transfer method to allow transfers
     void transfer(Account *dest_acc, float amount) override;
 
+    void get_specific_inputs() override;
+    void display_info() override;
+
     ~Current_Account();
 };

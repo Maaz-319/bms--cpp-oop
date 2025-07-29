@@ -12,5 +12,7 @@ public:
 
     void get_specific_inputs() override;
 
+    void display_info() override;
+
     ~AccountHolder();
 };
