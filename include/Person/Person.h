@@ -18,7 +18,6 @@ protected:
 
 public:
     Person();
-    // virtual void printDetails() = 0;
 
     // Getters
     string getName();
@@ -40,6 +39,8 @@ public:
     void get_common_inputs();
 
     virtual void get_specific_inputs() = 0;
+
+    virtual void display_info() = 0;
 
     virtual ~Person();
 };
