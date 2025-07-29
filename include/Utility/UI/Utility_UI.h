@@ -4,6 +4,7 @@
 #include <regex>
 #include <string>
 #include <vector>
+#include <limits>
 
 class Utility_UI
 {
@@ -24,6 +25,7 @@ public:
     static std::string take_email_input(const std::string &prompt = "Email");
     static std::string take_pin_input(const std::string &prompt = "PIN", int length = 4);
     static std::string generate_4_digit_random_number();
+    static double take_balance_input(const std::string &prompt="Amount", double min = 1.0, double max = 1e6);
     Utility_UI() = delete;
 
     enum Colors

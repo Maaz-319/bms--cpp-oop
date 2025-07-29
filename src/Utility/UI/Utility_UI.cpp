@@ -5,6 +5,7 @@
 #include <regex>
 #include <string>
 #include <random>
+#include <limits>
 
 #ifdef _WIN32
 #include <windows.h>
@@ -283,17 +284,17 @@ std::string Utility_UI::take_string_input(const std::string &prompt, int limit)
 
         if (!std::regex_match(input, std::regex("^[A-Za-z ]+$")))
         {
-            std::cout << "ERROR: Only letters (A-Z, a-z) are allowed in " << prompt << "\n";
+            Utility_UI::print_error_message("Only letters (A-Z, a-z) are allowed in " + prompt);
             continue;
         }
         if (input.length() < 3)
         {
-            std::cout << "ERROR: Min Length for " << prompt << " is 3\n";
+            Utility_UI::print_error_message("Min Length for " + prompt + " is 3");
             continue;
         }
         if (input.length() > static_cast<size_t>(limit))
         {
-            std::cout << "ERROR: Max Length for " << prompt << " is " << limit << "\n";
+            Utility_UI::print_error_message("Max Length for " + prompt + " is " + to_string(limit));
             continue;
         }
         break;
@@ -311,7 +312,7 @@ std::string Utility_UI::take_email_input(const std::string &prompt)
         std::getline(std::cin, input);
         if (!std::regex_match(input, pattern))
         {
-            std::cout << "ERROR: Invalid " << prompt << " format.\n";
+            Utility_UI::print_error_message("Invalid " + prompt + " format");
         }
         else
         {
@@ -331,7 +332,7 @@ std::string Utility_UI::take_phone_input(const std::string &prompt)
         std::getline(std::cin, input);
         if (!std::regex_match(input, pattern))
         {
-            std::cout << "ERROR: Invalid " << prompt << " Number.\n";
+            Utility_UI::print_error_message("Invalid " + prompt + " Number");
         }
         else
         {
@@ -351,7 +352,7 @@ std::string Utility_UI::take_pin_input(const std::string &prompt, int length)
         std::getline(std::cin, input);
         if (!std::regex_match(input, pattern))
         {
-            std::cout << "ERROR: Invalid " << prompt << ". Please try again.\n";
+            Utility_UI::print_error_message("Invalid " + prompt + ". Please try again");
         }
         else
         {
@@ -366,4 +367,36 @@ std::string Utility_UI::generate_4_digit_random_number()
     static std::mt19937 rng(std::random_device{}());     // initialized once
     std::uniform_int_distribution<int> dist(1000, 9999); // 4-digit range
     return std::to_string(dist(rng));
+}
+
+double Utility_UI::take_balance_input(const std::string &prompt, double min = 1.0, double max = 1e6)
+{
+    double amount;
+    while (true)
+    {
+        std::cout << "Enter " << prompt << " (" << min << " - " << max << "): ";
+        std::cin >> amount;
+
+        // Input failure (non-numeric input)
+        if (std::cin.fail())
+        {
+            std::cin.clear();                                                   // clear error flags
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // discard bad input
+            Utility_UI::print_error_message("Please enter a valid number");
+            continue;
+        }
+
+        // Range check
+        if (amount < min || amount > max)
+        {
+            Utility_UI::print_error_message(prompt + " must be between " + to_string(min) + " and " + to_string(max));
+            continue;
+        }
+
+        // Successful input
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // flush rest of line
+        break;
+    }
+
+    return amount;
 }
