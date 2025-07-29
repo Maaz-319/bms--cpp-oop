@@ -151,21 +151,25 @@ int Utility_UI::print_menu_box(const std::string &title, const std::vector<std::
 
 void Utility_UI::print_success_message(const std::string &message)
 {
+    string word_to_print = "SUCCESS";
     cout << endl;
+    int len = message.length() + word_to_print.length() + 3;
     Utility_UI::set_console_color(Utility_UI::Colors::GREEN);
-    print_dashed_line(40);
-    cout << "SUCCESS: " << message << endl;
-    print_dashed_line(40);
+    print_dashed_line(len);
+    cout << word_to_print << ": " << message << endl;
+    print_dashed_line(len);
     Utility_UI::reset_console_color();
 }
 
 void Utility_UI::print_error_message(const std::string &message)
 {
+    string word_to_print = "Error";
     cout << endl;
+    int len = message.length() + word_to_print.length() + 3;
     Utility_UI::set_console_color(Utility_UI::Colors::RED);
-    print_dashed_line(40);
-    cout << "ERROR: " << message << endl;
-    print_dashed_line(40);
+    print_dashed_line(len);
+    cout << word_to_print << ": " << message << endl;
+    print_dashed_line(len);
     Utility_UI::reset_console_color();
 }
 
