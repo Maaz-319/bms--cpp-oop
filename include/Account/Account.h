@@ -39,5 +39,7 @@ public:
     virtual void get_specific_inputs() = 0;
     virtual void display_info() = 0;
 
+    static void login();
+
     ~Account();
 };

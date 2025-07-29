@@ -30,11 +30,16 @@ void Account::transfer(Account *toAccount, float amount)
 {
 }
 
-void Account::get_common_inputs(Person * acc_holder)
+void Account::get_common_inputs(Person *acc_holder)
 {
     this->setOwner(acc_holder);
     this->setAccNo(Utility_UI::generate_4_digit_random_number());
     this->setPin(Utility_UI::take_pin_input());
+}
+
+static void login()
+{
+    
 }
 
 Account::~Account() {}
