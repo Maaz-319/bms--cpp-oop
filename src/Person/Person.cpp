@@ -1,5 +1,5 @@
-#include "Person.h"
-#include "../Utility/UI/Utility_UI.h"
+#include "../../include/Person/Person.h"
+#include "../../include/Utility/UI/Utility_UI.h"
 
 #include <iostream>
 
