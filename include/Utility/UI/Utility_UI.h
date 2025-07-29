@@ -1,29 +1,34 @@
 #pragma once
 
-#include <string>
+#include <iostream>
+#include <regex>
 #include <vector>
 #ifdef _WIN32
 #include <windows.h>
 #endif
-using namespace std;
 
-class Utility_UI {
+class Utility_UI
+{
 public:
     static void print_line(int);
     static void print_dashed_line(int);
-    static void print_header(const string& title);
-    static int print_menu_box(const string& title, const vector<string>& options);
-    static void print_success_message(const string& message);
-    static void print_error_message(const string& message);
-    static void print_info_box(const string& message);
+    static void print_header(const std::string &title);
+    static int print_menu_box(const std::string &title, const vector<std::string> &options);
+    static void print_success_message(const std::string &message);
+    static void print_error_message(const std::string &message);
+    static void print_info_box(const std::string &message);
     static void set_console_color(int color);
     static void reset_console_color();
     static int take_integer_input(int min, int max, string prompt);
-    static string take_phone_input();
-    static string take_string_input(string prompt);
+    // static std::string take_phone_input();
+    static std::string take_phone_input(const std::string& prompt = "Phone No");
+    static std::string take_string_input(const std::string& prompt, int limit = 100);
+    static std::string take_email_input(const std::string& prompt = "Email");
+    static std::string take_pin_input(const std::string& prompt = "PIN", int length = 4);
     Utility_UI() = delete;
 
-    enum Colors {
+    enum Colors
+    {
         BLACK = 0,
         DARK_BLUE = 1,
         DARK_GREEN = 2,

@@ -1,5 +1,4 @@
 #include "../../../include/Utility/UI/Utility_UI.h"
-#include <string>
 #include <vector>
 #include <iostream>
 #include <iomanip>
@@ -102,7 +101,7 @@ void Utility_UI::print_dashed_line(int length = 50)
     cout << endl;
 }
 
-void Utility_UI::print_header(const string &title)
+void Utility_UI::print_header(const std::string &title)
 {
     system("cls");
     print_line(60);
@@ -111,7 +110,7 @@ void Utility_UI::print_header(const string &title)
     cout << endl;
 }
 
-int Utility_UI::print_menu_box(const string &title, const vector<string> &options)
+int Utility_UI::print_menu_box(const std::string &title, const vector<std::string> &options)
 {
     system("cls");
 
@@ -148,7 +147,7 @@ int Utility_UI::print_menu_box(const string &title, const vector<string> &option
     return Utility_UI::take_integer_input(1, options.size(), "choice");
 }
 
-void Utility_UI::print_success_message(const string &message)
+void Utility_UI::print_success_message(const std::string &message)
 {
     cout << endl;
     Utility_UI::set_console_color(Utility_UI::Colors::GREEN);
@@ -158,7 +157,7 @@ void Utility_UI::print_success_message(const string &message)
     Utility_UI::reset_console_color();
 }
 
-void Utility_UI::print_error_message(const string &message)
+void Utility_UI::print_error_message(const std::string &message)
 {
     cout << endl;
     Utility_UI::set_console_color(Utility_UI::Colors::RED);
@@ -168,7 +167,7 @@ void Utility_UI::print_error_message(const string &message)
     Utility_UI::reset_console_color();
 }
 
-void Utility_UI::print_info_box(const string &message)
+void Utility_UI::print_info_box(const std::string &message)
 {
     cout << endl;
     cout << "+";
@@ -182,7 +181,7 @@ void Utility_UI::print_info_box(const string &message)
     cout << "+" << endl;
 }
 
-int Utility_UI::take_integer_input(int min, int max, string prompt)
+int Utility_UI::take_integer_input(int min, int max, std::string prompt)
 {
     int variable;
     bool valid = false;
@@ -210,59 +209,142 @@ int Utility_UI::take_integer_input(int min, int max, string prompt)
     return variable;
 }
 
-string Utility_UI::take_phone_input()
+// std::string Utility_UI::take_phone_input()
+// {
+//     std::string variable;
+//     bool valid = false;
+
+//     while (!valid)
+//     {
+//         cout << "Enter 11 digit phone number (03XXXXXXXXX): ";
+//         cin >> variable;
+
+//         // Check if the input is a valid phone number (11 digits, starts with 03)
+//         if (variable.length() != 11 || variable.substr(0, 2) != "03" || !all_of(variable.begin(), variable.end(), ::isdigit))
+//         {
+//             Utility_UI::print_error_message("Invalid phone number.\nPlease enter an 11-digit number starting with 03.");
+//             cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Clear any remaining input
+//         }
+//         else
+//         {
+//             valid = true;
+//             cin.ignore(numeric_limits<streamsize>::max(), '\n');
+//         }
+//     }
+//     return variable;
+// }
+
+// string Utility_UI::take_string_input(string prompt)
+// {
+//     string variable;
+
+//     while (true)
+//     {
+//         cout << "Enter " << prompt << ": ";
+
+//         if (cin.peek() == '\n')
+//         {
+//             cin.ignore();
+//         }
+
+//         getline(cin, variable);
+
+//         // Remove leading and trailing whitespace
+//         variable.erase(variable.begin(), find_if(variable.begin(), variable.end(), [](unsigned char ch)
+//                                                  { return !isspace(ch); }));
+//         variable.erase(find_if(variable.rbegin(), variable.rend(), [](unsigned char ch)
+//                                { return !isspace(ch); })
+//                            .base(),
+//                        variable.end());
+
+//         if (!variable.empty())
+//         {
+//             return variable;
+//         }
+
+//         Utility_UI::print_error_message("Input cannot be empty. Please try again.");
+//     }
+// }
+
+std::string Utility_UI::take_string_input(const std::string &prompt, int limit = 100)
 {
-    string variable;
-    bool valid = false;
-
-    while (!valid)
+    std::string input;
+    while (true)
     {
-        cout << "Enter 11 digit phone number (03XXXXXXXXX): ";
-        cin >> variable;
+        std::cout << "Enter " << prompt << ": ";
+        std::getline(std::cin, input);
 
-        // Check if the input is a valid phone number (11 digits, starts with 03)
-        if (variable.length() != 11 || variable.substr(0, 2) != "03" || !all_of(variable.begin(), variable.end(), ::isdigit))
+        if (!std::regex_match(input, std::regex("^[A-Za-z ]+$")))
         {
-            Utility_UI::print_error_message("Invalid phone number.\nPlease enter an 11-digit number starting with 03.");
-            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Clear any remaining input
+            std::cout << "ERROR: Only letters (A-Z, a-z) are allowed in " << prompt << "\n";
+            continue;
+        }
+        if (input.length() < 3)
+        {
+            std::cout << "ERROR: Min Length for " << prompt << " is 3\n";
+            continue;
+        }
+        if (input.length() > static_cast<size_t>(limit))
+        {
+            std::cout << "ERROR: Max Length for " << prompt << " is " << limit << "\n";
+            continue;
+        }
+        break;
+    }
+    return input;
+}
+
+std::string Utility_UI::take_email_input(const std::string &prompt = "Email")
+{
+    std::string input;
+    std::regex pattern("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
+    while (true)
+    {
+        std::cout << "Enter " << prompt << ": ";
+        std::getline(std::cin, input);
+        if (!std::regex_match(input, pattern))
+        {
+            std::cout << "ERROR: Invalid " << prompt << " format.\n";
         }
         else
         {
-            valid = true;
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            break;
         }
     }
-    return variable;
+    return input;
 }
 
-string Utility_UI::take_string_input(string prompt)
+std::string Utility_UI::take_phone_input(const std::string &prompt = "Phone No")
 {
-    string variable;
-
+    std::string input;
+    std::regex pattern("^03\\d{9}$");
     while (true)
     {
-        cout << "Enter " << prompt << ": ";
-
-        if (cin.peek() == '\n')
+        std::cout << "Enter " << prompt << ": ";
+        std::getline(std::cin, input);
+        if (!std::regex_match(input, pattern))
         {
-            cin.ignore();
+            std::cout << "ERROR: Invalid " << prompt << " Number.\n";
         }
-
-        getline(cin, variable);
-
-        // Remove leading and trailing whitespace
-        variable.erase(variable.begin(), find_if(variable.begin(), variable.end(), [](unsigned char ch)
-                                                 { return !isspace(ch); }));
-        variable.erase(find_if(variable.rbegin(), variable.rend(), [](unsigned char ch)
-                               { return !isspace(ch); })
-                           .base(),
-                       variable.end());
-
-        if (!variable.empty())
+        else
         {
-            return variable;
+            break;
         }
-
-        Utility_UI::print_error_message("Input cannot be empty. Please try again.");
     }
+    return input;
+}
+
+std::string Utility_UI::take_pin_input(const std::string& prompt = "PIN", int length = 4) {
+    std::string input;
+    std::regex pattern("^\\d{4}$");
+    while (true) {
+        std::cout << "Enter " << prompt << " (" << length << "-digit): ";
+        std::getline(std::cin, input);
+        if (!std::regex_match(input, pattern)) {
+            std::cout << "ERROR: Invalid " << prompt << ". Please try again.\n";
+        } else {
+            break;
+        }
+    }
+    return input;
 }
