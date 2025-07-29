@@ -1,3 +1,4 @@
+#pragma once
 #include "Current_Account.h"
 #include "Account.h"
 #include <vector>
