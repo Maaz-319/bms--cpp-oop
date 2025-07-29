@@ -105,13 +105,21 @@ void Utility_UI::print_dashed_line(int length)
     cout << endl;
 }
 
-void Utility_UI::print_header(const std::string &title)
-{
-    system("cls");
-    print_line(60);
-    cout << "| " << setw(56) << left << title << " |" << endl;
-    print_line(60);
-    cout << endl;
+// void Utility_UI::print_header(const std::string &title)
+// {
+//     system("cls");
+//     print_line(60);
+//     cout << "| " << setw(56) << left << title << " |" << endl;
+//     print_line(60);
+//     cout << endl;
+// }
+
+void Utility_UI::print_header(const std::string& header, int width) {
+    Utility_UI::print_dashed_line(width);
+    int space = width / 2 - header.length() / 2;
+    cout << "|" << std::string(space, ' ') << header
+              << std::string(width - space - header.length() - 2, ' ') << "|\n";
+    Utility_UI::print_dashed_line(width);
 }
 
 int Utility_UI::print_menu_box(const std::string &title, const std::vector<std::string> &options)

@@ -11,7 +11,7 @@ class Utility_UI
 public:
     static void print_line(int length = 50);
     static void print_dashed_line(int length = 50);
-    static void print_header(const std::string &title);
+    static void print_header(const std::string& header, int width = 60);
     static int print_menu_box(const std::string &title, const std::vector<std::string> &options);
     static void print_success_message(const std::string &message);
     static void print_error_message(const std::string &message);
