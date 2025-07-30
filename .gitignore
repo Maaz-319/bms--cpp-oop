@@ -37,3 +37,5 @@
 # vscode workspace files
 >>>>>>> Stashed changes
 .vscode/
+
+*.db
