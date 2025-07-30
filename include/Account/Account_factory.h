@@ -11,7 +11,7 @@ public:
     static Account *create_account(std::vector<std::string> argument_list, Person *person)
     {
         Account *account = nullptr;
-        if (argument_list[argument_list.size() - 1] == "Current Account")
+        if (argument_list[argument_list.size() - 2] == "Current Account")
         {
             account = new Current_Account();
             account->setAccNo(argument_list[0]);

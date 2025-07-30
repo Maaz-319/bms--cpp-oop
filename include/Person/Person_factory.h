@@ -12,6 +12,7 @@ public:
         if (argument_list[argument_list.size() - 1] == "AccountHolder")
         {
             person = new AccountHolder();
+            person->setId(std::stoi(argument_list[0]));
             person->setName(argument_list[1]);
             person->setAge(std::stoi(argument_list[2]));
             person->setPhone(argument_list[3]);
