@@ -26,7 +26,7 @@ goto menu
 
 :compile_sqlite
 echo Compiling SQLite...
-gcc -c include/Utility/dbmanager/sqlite3.c -o include/Utility/dbmanager/sqlite3.o -I./include
+gcc -c include\Utility\dbmanager\sqlite3.c -o include\Utility\dbmanager\sqlite3.o -I.\include
 if %errorlevel% equ 0 (
     echo SQLite compiled successfully! sqlite3.o created.
 ) else (
@@ -39,42 +39,38 @@ goto menu
 
 :compile_bms
 echo Compiling Bank Management System...
-if exist build\bms.exe del build\bms.exe
-if not exist sqlite3.o (
-    echo Error: sqlite3.o not found! Please compile SQLite first (option 1).
+if not exist include\Utility\dbmanager\sqlite3.o (
+    echo Error: sqlite3.o not found! Please compile SQLite first ^(option 1^).
     pause
     goto menu
 )
-g++ -std=c++17 -I./include src/main.cpp src/Utility/UI/Utility_UI.cpp src/Person/Person.cpp src/Person/Account_Holder.cpp src/Account/Account.cpp src/Account/Current_Account.cpp src/Bank/Bank.cpp include/Utility/dbmanager/sqlite3.o -o build/bms.exe
+if exist build\bms.exe del build\bms.exe
+g++ -std=c++17 -I.\include src\main.cpp src\Utility\UI\Utility_UI.cpp src\Person\Person.cpp src\Person\Account_Holder.cpp src\Account\Account.cpp src\Account\Current_Account.cpp src\Bank\Bank.cpp include\Utility\dbmanager\sqlite3.o -o build\bms.exe
 if %errorlevel% equ 0 (
-    echo Build successful! Run build/bms.exe to start the program.
+    echo Build successful! Run build\bms.exe to start the program.
 ) else (
-    echo Build failed!
-    pause
-    goto menu
+    echo BMS build failed!
 )
 pause
 goto menu
 
 :compile_both
 echo Compiling SQLite and Bank Management System...
-:: Compile SQLite
-gcc -c include/Utility/dbmanager/sqlite3.c -o include/Utility/dbmanager/sqlite3.o -I./include
+echo Compiling SQLite...
+gcc -c include\Utility\dbmanager\sqlite3.c -o include\Utility\dbmanager\sqlite3.o -I.\include
 if %errorlevel% neq 0 (
     echo SQLite compilation failed!
     pause
     goto menu
 )
 echo SQLite compiled successfully! sqlite3.o created.
-:: Compile BMS
+echo Compiling BMS...
 if exist build\bms.exe del build\bms.exe
-g++ -std=c++17 -I./include src/main.cpp src/Utility/UI/Utility_UI.cpp src/Person/Person.cpp src/Person/Account_Holder.cpp src/Account/Account.cpp src/Account/Current_Account.cpp src/Bank/Bank.cpp include/Utility/dbmanager/sqlite3.o -o build/bms.exe
+g++ -std=c++17 -I.\include src\main.cpp src\Utility\UI\Utility_UI.cpp src\Person\Person.cpp src\Person\Account_Holder.cpp src\Account\Account.cpp src\Account\Current_Account.cpp src\Bank\Bank.cpp include\Utility\dbmanager\sqlite3.o -o build\bms.exe
 if %errorlevel% equ 0 (
-    echo Build successful! Run build/bms.exe to start the program.
+    echo Build successful! Run build\bms.exe to start the program.
 ) else (
     echo BMS build failed!
-    pause
-    goto menu
 )
 pause
 goto menu
