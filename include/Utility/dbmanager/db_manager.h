@@ -32,9 +32,9 @@ public:
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
                     name TEXT NOT NULL,
                     age INTEGER,
-                    type TEXT,
                     phone TEXT,
-                    address TEXT
+                    address TEXT,
+                    type TEXT
                 );
             )";
             char *err_msg = nullptr;
@@ -142,7 +142,7 @@ public:
                 }
             }
             sqlite3_finalize(stmt);
-            return record; // Order: id, name, age, type, phone, address
+            return record; // Order: id, name, age, phone, address, type
         }
     };
 
@@ -152,15 +152,15 @@ public:
         static void create_table(sqlite3 *db)
         {
             const char *sql = R"(
-                CREATE TABLE IF NOT EXISTS Account (
-                    acc_no TEXT PRIMARY KEY,
-                    balance REAL NOT NULL,
-                    type TEXT NOT NULL,
-                    pin TEXT NOT NULL,
-                    owner_name INTEGER NOT NULL,
-                    FOREIGN KEY (owner_name) REFERENCES Person(id)
-                );
-            )";
+        CREATE TABLE IF NOT EXISTS Account (
+            acc_no TEXT PRIMARY KEY,
+            balance REAL NOT NULL,
+            pin TEXT NOT NULL,
+            type TEXT NOT NULL,
+            owner_id INTEGER NOT NULL,
+            FOREIGN KEY (owner_id) REFERENCES Person(id)
+        );
+    )";
             char *err_msg = nullptr;
             if (sqlite3_exec(db, sql, nullptr, nullptr, &err_msg) != SQLITE_OK)
             {
@@ -171,9 +171,9 @@ public:
         }
 
         static void insert_record(sqlite3 *db, const std::string &acc_no, double balance, const std::string &type,
-                                  const std::string &pin, const std::string &owner_name)
+                                  const std::string &pin, int owner_id)
         {
-            const char *sql = "INSERT INTO Account (acc_no, balance, type, pin, owner_name) VALUES (?, ?, ?, ?, ?);";
+            const char *sql = "INSERT INTO Account (acc_no, balance, type, pin, owner_id) VALUES (?, ?, ?, ?, ?);";
             sqlite3_stmt *stmt;
             if (sqlite3_prepare_v2(db, sql, -1, &stmt, nullptr) != SQLITE_OK)
             {
@@ -183,7 +183,7 @@ public:
             sqlite3_bind_double(stmt, 2, balance);
             sqlite3_bind_text(stmt, 3, type.c_str(), -1, SQLITE_STATIC);
             sqlite3_bind_text(stmt, 4, pin.c_str(), -1, SQLITE_STATIC);
-            sqlite3_bind_text(stmt, 5, owner_name.c_str(), -1, SQLITE_STATIC);
+            sqlite3_bind_int(stmt, 5, owner_id);
             if (sqlite3_step(stmt) != SQLITE_DONE)
             {
                 sqlite3_finalize(stmt);
@@ -207,9 +207,9 @@ public:
         }
 
         static bool update_record(sqlite3 *db, const std::string &acc_no, double balance, const std::string &type,
-                                  const std::string &pin, int owner_name)
+                                  const std::string &pin, int owner_id)
         {
-            const char *sql = "UPDATE Account SET balance = ?, type = ?, pin = ?, owner_name = ? WHERE acc_no = ?;";
+            const char *sql = "UPDATE Account SET balance = ?, type = ?, pin = ?, owner_id = ? WHERE acc_no = ?;";
             sqlite3_stmt *stmt;
             if (sqlite3_prepare_v2(db, sql, -1, &stmt, nullptr) != SQLITE_OK)
             {
@@ -218,7 +218,7 @@ public:
             sqlite3_bind_double(stmt, 1, balance);
             sqlite3_bind_text(stmt, 2, type.c_str(), -1, SQLITE_STATIC);
             sqlite3_bind_text(stmt, 3, pin.c_str(), -1, SQLITE_STATIC);
-            sqlite3_bind_int(stmt, 4, owner_name);
+            sqlite3_bind_int(stmt, 4, owner_id);
             sqlite3_bind_text(stmt, 5, acc_no.c_str(), -1, SQLITE_STATIC);
             bool success = sqlite3_step(stmt) == SQLITE_DONE && sqlite3_changes(db) > 0;
             sqlite3_finalize(stmt);
@@ -263,7 +263,7 @@ public:
                 }
             }
             sqlite3_finalize(stmt);
-            return record; // Order: acc_no, balance, type, pin, owner_name
+            return record; // Order: acc_no, balance, pin, type, owner_id
         }
 
         static bool account_exists(sqlite3 *db, const std::string &acc_no)
