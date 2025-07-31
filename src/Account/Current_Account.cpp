@@ -27,7 +27,7 @@ void Current_Account::get_specific_inputs()
 
 void Current_Account::display_info()
 {
-    Utility_UI::print_header("[INFO]: Account No. " + this->getAccNo());
+    std::cout << "Account No. " << this->getAccNo() << std::endl;
     std::cout << "Type: " << this->getType() << std::endl;
     std::cout << "Balance: " << this->getBalance() << std::endl;
     std::cout << "Owner: " << this->getOwner()->getName() << std::endl;

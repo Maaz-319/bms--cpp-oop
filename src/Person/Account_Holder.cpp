@@ -19,7 +19,7 @@ void AccountHolder::get_specific_inputs() {}
 
 void AccountHolder::display_info()
 {
-    Utility_UI::print_header("[INFO]: Account Holder " + this->getName());
+    std::cout << "Account Holder: " << this->getName() << std::endl;
     std::cout << "Age: " << this->getAge() << std::endl;
     std::cout << "Phone: " << this->getPhone() << std::endl;
     std::cout << "Address: " << this->getAddress() << std::endl;
