@@ -6,11 +6,14 @@
 #include <string>
 #include <random>
 #include <limits>
+#include <maaz_utills.h>
 
 #ifdef _WIN32
 #include <windows.h>
 #endif
 #include <algorithm>
+
+const int delay_ms = 1;
 
 using namespace std;
 
@@ -166,7 +169,7 @@ void Utility_UI::print_success_message(const std::string &message)
     int len = message.length() + word_to_print.length() + 3;
     Utility_UI::set_console_color(Utility_UI::Colors::GREEN);
     print_dashed_line(len);
-    cout << word_to_print << ": " << message << endl;
+    Maaz::print_slowly(word_to_print + ": " + message + "\n", delay_ms);
     print_dashed_line(len);
     Utility_UI::reset_console_color();
 }
@@ -178,7 +181,7 @@ void Utility_UI::print_error_message(const std::string &message)
     int len = message.length() + word_to_print.length() + 3;
     Utility_UI::set_console_color(Utility_UI::Colors::RED);
     print_dashed_line(len);
-    cout << word_to_print << ": " << message << endl;
+    Maaz::print_slowly(word_to_print + ": " + message + "\n", delay_ms);
     print_dashed_line(len);
     Utility_UI::reset_console_color();
 }
@@ -190,7 +193,7 @@ void Utility_UI::print_info_box(const std::string &message)
     for (int i = 0; i < message.length() + 6; i++)
         cout << "-";
     cout << "+" << endl;
-    cout << "|   " << message << "   |" << endl;
+    Maaz::print_slowly("|   " + message + "   |\n");
     cout << "+";
     for (int i = 0; i < message.length() + 6; i++)
         cout << "-";
@@ -204,7 +207,7 @@ int Utility_UI::take_integer_input(int min, int max, const std::string &prompt)
 
     while (!valid)
     {
-        cout << "Enter " << prompt << " (" << min << " - " << max << "): ";
+        Maaz::print_slowly("Enter " + prompt + " (" + to_string(min) + " - " + to_string(max) + "): ");
         if (!(cin >> variable))
         {
             Utility_UI::print_error_message("Invalid input. Please enter a number.");
@@ -287,7 +290,7 @@ std::string Utility_UI::take_string_input(const std::string &prompt, int limit)
     std::string input;
     while (true)
     {
-        std::cout << "Enter " << prompt << ": ";
+        Maaz::print_slowly("Enter " + prompt + ": ");
         std::getline(std::cin, input);
 
         if (!std::regex_match(input, std::regex("^[A-Za-z ]+$")))
@@ -316,7 +319,7 @@ std::string Utility_UI::take_email_input(const std::string &prompt)
     std::regex pattern("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
     while (true)
     {
-        std::cout << "Enter " << prompt << ": ";
+        Maaz::print_slowly("Enter " + prompt + ": ");
         std::getline(std::cin, input);
         if (!std::regex_match(input, pattern))
         {
@@ -336,7 +339,7 @@ std::string Utility_UI::take_phone_input(const std::string &prompt)
     std::regex pattern("^03\\d{9}$");
     while (true)
     {
-        std::cout << "Enter " << prompt << ": ";
+        Maaz::print_slowly("Enter " + prompt + ": ");
         std::getline(std::cin, input);
         if (!std::regex_match(input, pattern))
         {
@@ -356,7 +359,7 @@ std::string Utility_UI::take_pin_input(const std::string &prompt, int length)
     std::regex pattern("^\\d{4}$");
     while (true)
     {
-        std::cout << "Enter " << prompt << " (" << length << "-digit): ";
+        Maaz::print_slowly("Enter " + prompt + " (" + to_string(length) + "-digit): ");
         std::getline(std::cin, input);
         if (!std::regex_match(input, pattern))
         {
@@ -382,7 +385,7 @@ double Utility_UI::take_balance_input(const std::string &prompt, double min, dou
     double amount;
     while (true)
     {
-        std::cout << "Enter " << prompt << " (" << min << " - " << max << "): ";
+        Maaz::print_slowly("Enter " + prompt + " (" + to_string(min) + " - " + to_string(max) + "): ");
         std::cin >> amount;
 
         // Input failure (non-numeric input)
