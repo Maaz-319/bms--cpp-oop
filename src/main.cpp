@@ -6,7 +6,6 @@
 #include "../include/Utility/dbmanager/db_manager.h"
 #include "../include/Person/Person_factory.h"
 #include "../include/Account/Account_factory.h"
-#include "../include/Utility/tests/Log.h"
 #include "../include/Transaction/Transaction.h"
 
 #include <iostream>
@@ -287,12 +286,15 @@ std::string get_executable_directory(const char *argv0)
 
 int main(int argc, char *argv[])
 {
-    std::string exeDir = get_executable_directory(argv[0]) + "\\data.db";
-    std::cout << "Database path: " << exeDir << std::endl;
+    std::filesystem::path exePath = get_executable_directory(argv[0]);
+    std::filesystem::path dbPath = exePath / "data.db";
+    std::string dbPathStr = dbPath.string();
+    
+    std::cout << "Database path: " << dbPathStr << std::endl;
 
     try
     {
-        Bank bank(exeDir);
+        Bank bank(dbPathStr);
         bank.run();
     }
     catch (const std::exception &e)
