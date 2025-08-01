@@ -58,7 +58,7 @@ private:
         }
         else
         {
-            Utility_UI::print_info_box("Recipient account not found!");
+            Utility_UI::print_error_message("Recipient account not found!");
         }
         getch();
     }
@@ -179,18 +179,19 @@ private:
             }
             else
             {
-                Utility_UI::print_info_box("Invalid PIN!");
+                Utility_UI::print_error_message("Invalid PIN!");
             }
         }
         else
         {
-            Utility_UI::print_info_box("Account not found!");
+            Utility_UI::print_error_message("Account not found!");
         }
 
         if (account != nullptr)
             delete account;
         if (account_holder != nullptr)
             delete account_holder;
+        getch();
     }
 
     void create_new_account()
