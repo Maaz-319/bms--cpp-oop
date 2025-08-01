@@ -206,23 +206,42 @@ public:
             return success;
         }
 
-        static bool update_record(sqlite3 *db, const std::string &acc_no, double balance, const std::string &type,
-                                  const std::string &pin, int owner_id)
+        // static bool update_record(sqlite3 *db, const std::string &acc_no, double balance, const std::string &type,
+        //                           const std::string &pin, int owner_id)
+        // {
+        //     const char *sql = "UPDATE Account SET balance = ?, type = ?, pin = ?, owner_id = ? WHERE acc_no = ?;";
+        //     sqlite3_stmt *stmt;
+        //     if (sqlite3_prepare_v2(db, sql, -1, &stmt, nullptr) != SQLITE_OK)
+        //     {
+        //         throw std::runtime_error("Prepare failed: " + std::string(sqlite3_errmsg(db)));
+        //     }
+        //     sqlite3_bind_double(stmt, 1, balance);
+        //     sqlite3_bind_text(stmt, 2, type.c_str(), -1, SQLITE_STATIC);
+        //     sqlite3_bind_text(stmt, 3, pin.c_str(), -1, SQLITE_STATIC);
+        //     sqlite3_bind_int(stmt, 4, owner_id);
+        //     sqlite3_bind_text(stmt, 5, acc_no.c_str(), -1, SQLITE_STATIC);
+        //     bool success = sqlite3_step(stmt) == SQLITE_DONE && sqlite3_changes(db) > 0;
+        //     sqlite3_finalize(stmt);
+        //     return success;
+        // }
+
+        static bool update_record(sqlite3 *db, const std::string &acc_no, double new_balance)
         {
-            const char *sql = "UPDATE Account SET balance = ?, type = ?, pin = ?, owner_id = ? WHERE acc_no = ?;";
+            const char *sql = "UPDATE Account SET balance = ? WHERE acc_no = ?";
             sqlite3_stmt *stmt;
-            if (sqlite3_prepare_v2(db, sql, -1, &stmt, nullptr) != SQLITE_OK)
+
+            if (sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) != SQLITE_OK)
             {
-                throw std::runtime_error("Prepare failed: " + std::string(sqlite3_errmsg(db)));
+                return false;
             }
-            sqlite3_bind_double(stmt, 1, balance);
-            sqlite3_bind_text(stmt, 2, type.c_str(), -1, SQLITE_STATIC);
-            sqlite3_bind_text(stmt, 3, pin.c_str(), -1, SQLITE_STATIC);
-            sqlite3_bind_int(stmt, 4, owner_id);
-            sqlite3_bind_text(stmt, 5, acc_no.c_str(), -1, SQLITE_STATIC);
-            bool success = sqlite3_step(stmt) == SQLITE_DONE && sqlite3_changes(db) > 0;
+
+            sqlite3_bind_double(stmt, 1, new_balance);
+            sqlite3_bind_text(stmt, 2, acc_no.c_str(), -1, SQLITE_STATIC);
+
+            int result = sqlite3_step(stmt);
             sqlite3_finalize(stmt);
-            return success;
+
+            return result == SQLITE_DONE;
         }
 
         static std::vector<std::string> get_column_values(sqlite3 *db, const std::string &column_name)
