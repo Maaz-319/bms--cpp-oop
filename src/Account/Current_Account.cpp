@@ -6,18 +6,7 @@
 Current_Account::Current_Account() : Account()
 {
     this->setType("Current Account");
-}
-
-void Current_Account::deposit(float amount)
-{
-}
-
-void Current_Account::withdraw(float amount)
-{
-}
-
-void Current_Account::transfer(Account *dest_acc, float amount)
-{
+    this->setOneTimeTransactionLimit(50000.0);
 }
 
 void Current_Account::get_specific_inputs()
