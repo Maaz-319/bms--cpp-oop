@@ -7,6 +7,7 @@
 #include "../include/Person/Person_factory.h"
 #include "../include/Account/Account_factory.h"
 #include "../include/Utility/tests/Log.h"
+#include "../include/Transaction/Transaction.h"
 
 #include <iostream>
 #include <vector>
@@ -22,22 +23,85 @@ private:
     DB_Manager db;
     sqlite3 *db_ptr;
 
-    void transfer_money()
+    void transfer_money(Account *from_account, Person *acc_holder)
     {
         system("cls");
         Utility_UI::print_header("Money Transfer");
+
+        double amount = Utility_UI::take_balance_input("Transfer Amount");
+        string recipient_acc_no = Utility_UI::take_pin_input("4-digit Recipient Account No");
+
+        std::vector<std::string> recipient_data = DB_Manager::DB_Manager_Account::get_record_by_column(db_ptr, "acc_no", recipient_acc_no);
+
+        if (!recipient_data.empty())
+        {
+            std::vector<std::string> recipient_person_data = DB_Manager::DB_Manager_Person::get_record_by_column(db_ptr, "id", recipient_data[recipient_data.size() - 1]);
+
+            Person *recipient_person = Person_factory::create_person(recipient_person_data);
+            Account *recipient_account = Account_Factory::create_account(recipient_data, recipient_person);
+
+            TransactionResult result = Transaction::transfer(from_account, recipient_account, acc_holder, amount);
+
+            if (result.is_successful)
+            {
+                Utility_UI::print_success_message(result.message);
+                DB_Manager::DB_Manager_Account::update_record(db_ptr, from_account->getAccNo(), from_account->getBalance());
+                DB_Manager::DB_Manager_Account::update_record(db_ptr, recipient_account->getAccNo(), recipient_account->getBalance());
+            }
+            else
+            {
+                Utility_UI::print_error_message(result.message);
+            }
+
+            delete recipient_account;
+            delete recipient_person;
+        }
+        else
+        {
+            Utility_UI::print_info_box("Recipient account not found!");
+        }
         getch();
     }
-    void withdraw_money()
+    void withdraw_money(Account *account, Person *acc_holder)
     {
         system("cls");
         Utility_UI::print_header("Wihdraw");
+
+        double amount = Utility_UI::take_balance_input("Withdraw Amount");
+
+        TransactionResult result = Transaction::withdraw(account, acc_holder, amount);
+
+        if (result.is_successful)
+        {
+            DB_Manager::DB_Manager_Account::update_record(db_ptr, account->getAccNo(), account->getBalance());
+            Utility_UI::print_success_message(result.message);
+        }
+        else
+        {
+            Utility_UI::print_error_message(result.message);
+        }
+
         getch();
     }
-    void deposit_money()
+    void deposit_money(Account *account, Person *acc_holder)
     {
         system("cls");
         Utility_UI::print_header("Deposit");
+
+        double amount = Utility_UI::take_balance_input("Deposit Amount");
+
+        TransactionResult result = Transaction::deposit(account, acc_holder, amount);
+
+        if (result.is_successful)
+        {
+            DB_Manager::DB_Manager_Account::update_record(db_ptr, account->getAccNo(), account->getBalance());
+            Utility_UI::print_success_message(result.message);
+        }
+        else
+        {
+            Utility_UI::print_error_message(result.message);
+        }
+
         getch();
     }
     void dashboard(Account *account, Person *acc_holder)
@@ -68,15 +132,15 @@ private:
             }
             else if (choice == 3)
             {
-                transfer_money();
+                transfer_money(account, acc_holder);
             }
             else if (choice == 2)
             {
-                withdraw_money();
+                withdraw_money(account, acc_holder);
             }
             else if (choice == 1)
             {
-                deposit_money();
+                deposit_money(account, acc_holder);
             }
         }
     }
@@ -225,14 +289,16 @@ int main(int argc, char *argv[])
     std::string exeDir = get_executable_directory(argv[0]) + "\\data.db";
     std::cout << "Database path: " << exeDir << std::endl;
 
-    try {
+    try
+    {
         Bank bank(exeDir);
         bank.run();
     }
-    catch (const std::exception& e) {
+    catch (const std::exception &e)
+    {
         std::cerr << "Error: " << e.what() << std::endl;
         return 1;
     }
-    
+
     return 0;
 }
