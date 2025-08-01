@@ -45,7 +45,7 @@ if not exist include\Utility\dbmanager\sqlite3.o (
     goto menu
 )
 if exist build\bms.exe del build\bms.exe
-g++ -std=c++17 -I.\include src\main.cpp src\Utility\UI\Utility_UI.cpp src\Person\Person.cpp src\Person\Account_Holder.cpp src\Account\Account.cpp src\Account\Current_Account.cpp src\Bank\Bank.cpp include\Utility\dbmanager\sqlite3.o -o build\bms.exe
+g++ -std=c++17 -I.\include src\main.cpp src\Utility\UI\Utility_UI.cpp src\Person\Person.cpp src\Person\Account_Holder.cpp src\Account\Account.cpp src\Account\Current_Account.cpp src\Transaction\Transaction.cpp include\Utility\dbmanager\sqlite3.o -o build\bms.exe
 if %errorlevel% equ 0 (
     echo Build successful! Run build\bms.exe to start the program.
 ) else (
@@ -66,7 +66,7 @@ if %errorlevel% neq 0 (
 echo SQLite compiled successfully! sqlite3.o created.
 echo Compiling BMS...
 if exist build\bms.exe del build\bms.exe
-g++ -std=c++17 -I.\include src\main.cpp src\Utility\UI\Utility_UI.cpp src\Person\Person.cpp src\Person\Account_Holder.cpp src\Account\Account.cpp src\Account\Current_Account.cpp src\Bank\Bank.cpp include\Utility\dbmanager\sqlite3.o -o build\bms.exe
+g++ -std=c++17 -I.\include src\main.cpp src\Utility\UI\Utility_UI.cpp src\Person\Person.cpp src\Person\Account_Holder.cpp src\Account\Account.cpp src\Account\Current_Account.cpp src\Transaction\Transaction.cpp include\Utility\dbmanager\sqlite3.o -o build\bms.exe
 if %errorlevel% equ 0 (
     echo Build successful! Run build\bms.exe to start the program.
 ) else (
