@@ -2,6 +2,10 @@
 
 A C++ Object-Oriented Banking Application.
 
+## Video Preview
+
+<iframe src="https://drive.google.com/file/d/1IQPbmFGLQhudebHcFHKVoCHs7fxzIA2r/preview" width="640" height="480" allow="autoplay"></iframe>
+
 ## Features
 
 ### Core Banking Operations
